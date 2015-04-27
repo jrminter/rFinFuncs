@@ -1,0 +1,13 @@
+# rFinFunctions
+
+These are R helper functions for financial analysis.
+They are not yet ready for prime time.
+The documentation is not tracked because it is built
+using roxygen2.
+
+```
+setwd("~/git")
+library(devtools)
+document("rFinFuncs")
+setwd("~/git")
+```
