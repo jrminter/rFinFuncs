@@ -6,7 +6,7 @@
 #'
 #' @param from A start date (default "2009-01-01")
 #'
-#' @param to An ending date (default Sys.Date())
+#' @param to An ending date (default "" is Sys.Date())
 #'
 #' @param savePath (default "") A path ("~/dat") to optionally save csv
 #'
@@ -22,9 +22,12 @@
 #' library(rFinFuncs)
 pullSymbolYahoo <- function(Symbol,
                             from="2009-01-01",
-                            to=Sys.Date(),
+                            to="",
                             savePath="",
                             bVerbose=FALSE){
+  if (nchar(to) == 0){
+    to <- Sys.Date()
+  }
   tmp <- "test.csv"
   yahoo.URL <- "http://ichart.finance.yahoo.com/table.csv?"
   from.y <- as.numeric(strsplit(as.character(as.Date(from,origin='1970-01-01')),'-',)[[1]][1])
@@ -33,7 +36,7 @@ pullSymbolYahoo <- function(Symbol,
   to.y <- as.numeric(strsplit(as.character(as.Date(to,origin='1970-01-01')),'-',)[[1]][1])
   to.m <- as.numeric(strsplit(as.character(as.Date(to,origin='1970-01-01')),'-',)[[1]][2])-1
   to.d <- as.numeric(strsplit(as.character(as.Date(to,origin='1970-01-01')),'-',)[[1]][3])
-  strURL <- paste(yahoo.URL,
+  strFile <- paste(yahoo.URL,
                   "s=",Symbol,
                   "&a=",from.m,
                   "&b=",sprintf('%.2d',from.d),
@@ -59,7 +62,7 @@ pullSymbolYahoo <- function(Symbol,
             as.Date(fr[,1]),
             src='yahoo',updated=Sys.time())
 
-  colnames(fr) <- paste(toupper(gsub('\\^','',Symbols.name)),
+  colnames(fr) <- paste(toupper(gsub('\\^','',Symbol)),
                         c('Open','High','Low','Close',
                           'Volume','Adjusted'),
                         sep='.')
