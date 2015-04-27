@@ -2,7 +2,7 @@ Package: rFinFuncs
 Title: Wrapper functions for financial analysis
 Version: 0.0.0.9000
 Authors@R: person("Minter", "John", , "jrminter@gmail.com", role = c("aut", "cre"))
-Description: Makes financial analysis easier
-Depends: R (>= 3.2.0)
+Description: Makes financial analysis easier. The first function exports a function to pull a stock symbol from Yahoo! Finance.
+Depends: R (>= 3.2.0), xts, zoo
 License: MIT
 LazyData: true
