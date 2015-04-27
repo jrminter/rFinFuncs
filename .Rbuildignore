@@ -1,2 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+man/.gitkeep
+README.Rmd
+README.html

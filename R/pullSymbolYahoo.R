@@ -16,10 +16,24 @@
 #'
 #' @keywords keywords
 #'
+#' @import xts zoo
+#'
 #' @export
 #'
 #' @examples
 #' library(rFinFuncs)
+#' strHome <- Sys.getenv("HOME")
+#' setwd(strHome)
+#'
+#' dat.vix <- pullSymbolYahoo("^VIX",
+#'                            from="2009-01-01",
+#'                            savePath=strHome,
+#'                            bVerbose = FALSE)
+#' print(class(dat.vix))
+#' print(str(dat.vix))
+#' print(head(dat.vix))
+#' print(tail(dat.vix))
+#'
 pullSymbolYahoo <- function(Symbol,
                             from="2009-01-01",
                             to="",
@@ -53,12 +67,13 @@ pullSymbolYahoo <- function(Symbol,
 
   download.file(strFile, destfile=tmp)
   if(nchar(savePath) > 0){
-    strSave <- paste0(savePath,'/', Symbol, '.csv')
+    name <- toupper(gsub('\\^','',Symbol))
+    strSave <- paste0(savePath,'/', name,'.csv')
     # save a copy
     file.copy(tmp, strSave)
   }
   fr <- read.csv(tmp)
-  fr <- xts(as.matrix(fr[,-1]),
+  fr <- xts::xts(as.matrix(fr[,-1]),
             as.Date(fr[,1]),
             src='yahoo',updated=Sys.time())
 
