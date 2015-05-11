@@ -1,0 +1,73 @@
+---
+title: "Pull stock data from Yahoo! finance"
+author: "John Minter"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This shows how to pull financial data from Yahoo! finance and save the data for later analysis.
+
+First, let's start with a clean environment and set up to store the data in our working directory.
+
+```{r}
+rm(list=ls())
+library(quantmod)
+library(xts)
+library(rFinFuncs)
+```
+Now, let's indicate that we want to get new data and our file name.
+
+```{r, warning=FALSE, results='hide'}
+bGetNewData <- TRUE
+strCsv <- "./VIX.csv"
+
+if(bGetNewData){
+  file.remove(strCsv)
+  pullSymbolYahoo("^VIX",
+                  from = "2008-01-01",
+                  savePath = "./",
+                  bVerbose = FALSE)
+}
+```
+
+Note that we removed any old data and pulled down the data.
+Data by itself isn't very helpful, so let's first create a
+time series.
+
+```{r}
+dat.vix <- read.csv(strCsv,header=TRUE)
+dat.vix$Date <- as.Date(dat.vix$Date, format="%Y-%m-%d")
+dat.vix <- dat.vix[order(dat.vix$Date), ]
+dat.vix <- xts(dat.vix[,2:7], order.by=dat.vix[,1])
+
+print(head(dat.vix))
+```
+
+We probably want to change the column names to something more meaningful and explore our final object.
+
+```{r}
+names(dat.vix) <- c("VIX.Open",
+                    "VIX.High",
+                    "VIX.Low",
+                    "VIX.Close",
+                    "VIX.Volume",
+                    "VIX.Adj.Close")
+
+print(head(dat.vix))
+print(tail(dat.vix))
+print(class(dat.vix))
+```
+
+Finally, let's plot the data.
+
+```{r, fig.width=7}
+plot(dat.vix,
+     main="^VIX",
+     xlab="Date",
+     ylab="Adj Close")
+```
+

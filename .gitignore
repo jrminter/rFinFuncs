@@ -3,3 +3,5 @@
 .RData
 # don't track autho-generated .Rd files made with roxygen2
 man/*.Rd
+inst/doc
+vignettes/*.csv
