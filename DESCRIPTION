@@ -3,10 +3,16 @@ Title: Wrapper functions for financial analysis
 Version: 0.0.0.903
 Authors@R: person("Minter", "John", email= "jrminter@gmail.com", role = c("aut", "cre"))
 Maintainer: John Minter <jrminter@gmail.com>
-Description: Makes financial analysis easier. The first function exports a function to pull a stock symbol from Yahoo! Finance.
-Depends: R (>= 3.2.0), xts, zoo
+Description: Makes financial analysis easier. The first function exports a
+    function to pull a stock symbol from Yahoo! Finance.
+Depends:
+    R (>= 3.2.0),
+    xts,
+    zoo
 License: GPL (>= 2)
 LazyData: true
-Suggests: knitr,
+Suggests:
+    knitr,
     quantmod
 VignetteBuilder: knitr
+RoxygenNote: 5.0.1
